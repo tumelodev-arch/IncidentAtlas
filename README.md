@@ -4,8 +4,9 @@ A local incident coordination and review log for recording severity, impact, res
 
 ## Demo
 
-When GitHub Pages is enabled for this repository, the app will be available at [https://tumelodev-arch.github.io/IncidentAtlas/](https://tumelodev-arch.github.io/IncidentAtlas/).
-The application is also runnable locally; see below.
+**Hosted status:** not deployed yet. GitHub Pages must be enabled for this repository with **Settings → Pages → Build and deployment → Source = GitHub Actions**; the deployment workflow can then publish the application at [https://tumelodev-arch.github.io/IncidentAtlas/](https://tumelodev-arch.github.io/IncidentAtlas/](https://tumelodev-arch.github.io/IncidentAtlas/](https://tumelodev-arch.github.io/IncidentAtlas/).
+
+**Run now:** open `index.html` in a modern browser. See below for the local-only data and privacy boundaries.
 
 ## Features
 
