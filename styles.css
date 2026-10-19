@@ -631,6 +631,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
   }
 }
 
+
+
+.skip-link {
+  background: #39ff88;
+  color: #0b100d;
+}
+
 /* Shared portfolio theme: charcoal, warm text and neon terminal green. */
 html,body {
   min-height: 100%;
