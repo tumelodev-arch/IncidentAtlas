@@ -1,0 +1,12 @@
+{
+  "name": "incident-atlas",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Browser-based incident log and review workspace",
+  "scripts": {
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  }
+}
