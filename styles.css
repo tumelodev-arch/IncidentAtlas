@@ -8,6 +8,7 @@
   --muted: #a0b0a3;
   --line: #26362a;
   --dark: #101711;
+  --navy: #101711;
   --green: #39ff88;
   --green-light: #14271b;
   --mint: #14271b;
@@ -15,8 +16,9 @@
   --accent: #39ff88;
   --blue: #39ff88;
   --blue-light: #14271b;
+  --red: #ff7676;
   --red-light: #25191a;
-  --amber: #39ff88;
+  --amber: #d5e7a0;
   --berry: #39ff88;
   --berry-light: #14271b;
   --gold: #39ff88;
@@ -845,11 +847,19 @@ input::placeholder,textarea::placeholder {
   color: #b1c0b5;
 }
 
-.badge.p1,.badge.high,.level-high {
+.badge.p1, .badge.high {
+  border-color: #754044;
+  background: #25191a;
   color: #ffaaaa;
 }
 
-.badge.resolved,.badge.closed {
+.badge.p2 {
+  border-color: #52623b;
+  background: #1b2116;
+  color: #d5e7a0;
+}
+
+.badge.resolved, .badge.closed {
   border-color: #286b48;
   background: #14271b;
   color: #8cffb8;
