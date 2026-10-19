@@ -930,3 +930,82 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
     animation: none!important;
   }
 }
+
+
+/* Incident actions: clear hierarchy, strong contrast and comfortable tap targets. */
+.incident-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1rem;
+}
+
+.incident-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: .6rem .85rem;
+  border: 1px solid #34493a;
+  border-radius: 4px;
+  background: #151f18;
+  color: #e8f0e9;
+  font-size: .78rem;
+  font-weight: 700;
+  line-height: 1.2;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.incident-actions .resolve-button,
+.incident-actions .reopen-button {
+  border-color: #39ff88;
+  background: #39ff88;
+  color: #0b100d;
+}
+
+.incident-actions .resolve-button:hover,
+.incident-actions .reopen-button:hover {
+  border-color: #a1ffc5;
+  background: #a1ffc5;
+  color: #0b100d;
+}
+
+.incident-actions .edit-button:hover {
+  border-color: #39ff88;
+  background: #14271b;
+  color: #39ff88;
+}
+
+.incident-actions .delete-button {
+  border-color: #754044;
+  background: #25191a;
+  color: #ffaaaa;
+}
+
+.incident-actions .delete-button:hover {
+  border-color: #ff7676;
+  background: #3a2022;
+  color: #ffd1d1;
+}
+
+.incident-actions button:focus-visible {
+  outline: 3px solid #e8f0e9;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .incident-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .incident-actions button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .incident-actions button {
+    transition: none;
+  }
+}

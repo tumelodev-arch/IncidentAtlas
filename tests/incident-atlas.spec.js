@@ -15,7 +15,7 @@ test("Incident Atlas logs, resolves, persists and exports an incident", async ({
   let card = page.locator(".incident-card").filter({ hasText: title });
   await expect(card).toBeVisible();
   await expect(card.locator(".badge.p1")).toHaveText("P1");
-  await card.getByRole("button", { name: "Mark resolved" }).click();
+  await card.getByRole("button", { name: "Resolve incident" }).click();
   await expect(card.locator(".badge.resolved")).toHaveText("resolved");
 
   await page.reload();
