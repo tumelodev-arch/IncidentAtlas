@@ -130,14 +130,28 @@
     return Math.floor(hours/24)+"d "+hours%24+"h";
   }
   function filtered() {
-    const q = $("#search").value.trim().toLowerCase(),
-    state = $("#filter-status").value,
-    sev = $("#filter-severity").value;
-    return records.filter(r => (!q || [r.title,
-    r.service,
-    r.impact,
-    r.response].join(" ").toLowerCase().includes(q)) && (state === "all" || r.status === state) && (sev === "all" || r.severity === sev)).sort((a,
-    b) => (a.status === b.status?0: a.status === "open"?-1: 1) || ("P1234".indexOf(a.severity)-"P1234".indexOf(b.severity)) || toMs(b.startedAt)-toMs(a.startedAt));
+    const query = $("#search").value.trim().toLowerCase();
+    const state = $("#filter-status").value;
+    const severity = $("#filter-severity").value;
+
+    return records
+      .filter((record) => {
+        const matchesQuery = !query || [
+          record.title,
+          record.service,
+          record.impact,
+          record.response
+        ].join(" ").toLowerCase().includes(query);
+        const matchesState = state === "all" || record.status === state;
+        const matchesSeverity = severity === "all" || record.severity === severity;
+        return matchesQuery && matchesState && matchesSeverity;
+      })
+      .sort((a, b) => {
+        const stateOrder = a.status === b.status ? 0 : a.status === "open" ? -1 : 1;
+        const severityOrder = "P1234".indexOf(a.severity) - "P1234".indexOf(b.severity);
+        const newestFirst = toMs(b.startedAt) - toMs(a.startedAt);
+        return stateOrder || severityOrder || newestFirst;
+      });
   }
   function median(values) {
     if(!values.length)return "—";
