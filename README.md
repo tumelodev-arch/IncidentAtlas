@@ -1,31 +1,39 @@
 # Incident Atlas
 
-A local incident coordination and review log for recording severity, impact, response notes and follow-up.
+A local incident coordination and review log for severity, impact, response notes and follow-up.
 
-## Demo
+**Live demo:** https://tumelodev-arch.github.io/IncidentAtlas/
 
-**Hosted status:** not deployed yet. Enable GitHub Pages under **Settings → Pages → Build and deployment → Source = GitHub Actions**. After a successful deployment, the app should be available at [https://tumelodev-arch.github.io/IncidentAtlas/](https://tumelodev-arch.github.io/IncidentAtlas/).
-
-**Run locally:** open `index.html` in a modern browser. The app has no build step or external runtime dependency.
-
-## Features
+## What it does
 
 - Create, edit and delete incident records.
 - Record service, severity, start time, impact and response notes.
-- Mark incidents resolved or reopen them.
-- Search and filter by state and severity.
-- Calculate open/P1 counts, current-month resolutions and median resolution duration.
-- Export the incident log to JSON.
-- Persist data in browser local storage.
+- Resolve or reopen incidents, then search and filter by severity or state.
+- Review open/P1 counts, monthly resolutions and median resolution duration.
+- Export incident records as JSON and persist them in browser storage.
 
 ## Run locally
 
-Open `index.html` in a modern browser. There is no build step or external runtime dependency. `styles.css` and `app.js` are loaded locally.
+Open `index.html` in a modern browser. The application uses local HTML, CSS and JavaScript and has no build step or external runtime dependency.
 
 ## Data and privacy
 
-Records are stored in this browser only; they are not sent to a server or shared across browsers. Use synthetic or non-sensitive information. Clearing browser storage can remove locally saved records.
+Records stay in the current browser until exported or cleared. They are not sent to a server or shared across browsers. This is an incident-review practice tool, not a monitoring agent, alert router, paging service or shared system of record. It has no server, notifications, authentication or team storage. Use invented data only.
 
-## Boundaries
+## Tests
 
-This is an incident-log practice tool, not a monitoring agent, alert router or on-call platform. It has no server, integrations, notifications, authentication or shared team storage. Do not paste credentials, customer information, production hostnames or sensitive incident details into this public demo.
+The repository includes Playwright end-to-end tests. Install dependencies and Chromium before running them.
+
+```bash
+npm install
+npx playwright install chromium
+npm run test:e2e
+```
+
+## Interface design
+
+The interface uses the shared Engineering Field Notes design language, adapted for this app's main task. Primary controls have labelled actions, the mobile layout keeps actions reachable, and keyboard focus is visible. The app uses its own accent colour to make it recognisable beside the portfolio.
+
+## Limitations
+
+This is a browser-based practice application. A successful static deployment does not establish that it has a backend, authentication, shared state or production monitoring.

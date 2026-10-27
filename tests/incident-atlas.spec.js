@@ -3,6 +3,9 @@ const { test, expect } = require("@playwright/test");
 test("Incident Atlas logs, resolves, persists and exports an incident", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /Make the response visible/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Download incident log \(JSON\)/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Replace with sample incidents/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Clear all data/ })).toBeVisible();
 
   const title = "E2E synthetic API latency incident";
   await page.locator('#incident-form input[name="title"]').fill(title);

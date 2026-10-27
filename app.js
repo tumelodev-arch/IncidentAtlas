@@ -130,14 +130,28 @@
     return Math.floor(hours/24)+"d "+hours%24+"h";
   }
   function filtered() {
-    const q = $("#search").value.trim().toLowerCase(),
-    state = $("#filter-status").value,
-    sev = $("#filter-severity").value;
-    return records.filter(r => (!q || [r.title,
-    r.service,
-    r.impact,
-    r.response].join(" ").toLowerCase().includes(q)) && (state === "all" || r.status === state) && (sev === "all" || r.severity === sev)).sort((a,
-    b) => (a.status === b.status?0: a.status === "open"?-1: 1) || ("P1234".indexOf(a.severity)-"P1234".indexOf(b.severity)) || toMs(b.startedAt)-toMs(a.startedAt));
+    const query = $("#search").value.trim().toLowerCase();
+    const state = $("#filter-status").value;
+    const severity = $("#filter-severity").value;
+
+    return records
+      .filter((record) => {
+        const matchesQuery = !query || [
+          record.title,
+          record.service,
+          record.impact,
+          record.response
+        ].join(" ").toLowerCase().includes(query);
+        const matchesState = state === "all" || record.status === state;
+        const matchesSeverity = severity === "all" || record.severity === severity;
+        return matchesQuery && matchesState && matchesSeverity;
+      })
+      .sort((a, b) => {
+        const stateOrder = a.status === b.status ? 0 : a.status === "open" ? -1 : 1;
+        const severityOrder = "P1234".indexOf(a.severity) - "P1234".indexOf(b.severity);
+        const newestFirst = toMs(b.startedAt) - toMs(a.startedAt);
+        return stateOrder || severityOrder || newestFirst;
+      });
   }
   function median(values) {
     if(!values.length)return "—";
@@ -163,13 +177,47 @@
   }
   function renderList() {
     const rows = filtered();
-    $("#visible-count").textContent = rows.length+" incident"+(rows.length === 1?"": "s");
-    $("#empty-state").hidden = rows.length>0;
-    $("#incident-list").innerHTML = rows.map(r => {
-      const stateButton = r.status === "open"?'<button class="resolve-button" data-resolve="'+escapeHtml(r.id)+'">Resolve incident</button>': '<button class="reopen-button" data-reopen="'+escapeHtml(r.id)+'">Reopen incident</button>';
-      return '<article class="incident-card sev-'+r.severity.toLowerCase()+'"><div class="incident-main"><div class="incident-top"><h3 class="incident-title">'+escapeHtml(r.title)+'</h3><div class="incident-meta"><span class="badge '+r.severity.toLowerCase()+'">'+escapeHtml(r.severity)+'</span><span class="badge '+r.status+'">'+escapeHtml(r.status)+'</span></div></div><p class="incident-time">'+escapeHtml(r.service)+' · Started '+escapeHtml(fmt(r.startedAt))+(r.status === "resolved"?' · Resolved '+escapeHtml(fmt(r.resolvedAt)): ' · Open for '+escapeHtml(duration(r.startedAt,
-      new Date().toISOString())))+'</p>'+(r.impact?'<p class="incident-impact">'+escapeHtml(r.impact)+'</p>': '')+(r.response?'<p class="incident-response"><strong>Response:</strong> '+escapeHtml(r.response)+'</p>': '')+'<div class="incident-actions">'+stateButton+'<button class="edit-button" data-edit="'+escapeHtml(r.id)+'">Edit details</button><button class="delete-button" data-delete="'+escapeHtml(r.id)+'">Delete incident</button></div></div></article>';
-    }).join("");
+    $("#visible-count").textContent = `${rows.length} incident${rows.length === 1 ? "" : "s"}`;
+    $("#empty-state").hidden = rows.length > 0;
+
+    $("#incident-list").innerHTML = rows
+      .map((r) => {
+        const stateButton = r.status === "open"
+          ? `<button class="resolve-button" data-resolve="${escapeHtml(r.id)}">Resolve incident</button>`
+          : `<button class="reopen-button" data-reopen="${escapeHtml(r.id)}">Reopen incident</button>`;
+        const timeLabel = r.status === "resolved"
+          ? ` · Resolved ${escapeHtml(fmt(r.resolvedAt))}`
+          : ` · Open for ${escapeHtml(duration(r.startedAt, new Date().toISOString()))}`;
+        const impact = r.impact
+          ? `<p class="incident-impact">${escapeHtml(r.impact)}</p>`
+          : "";
+        const response = r.response
+          ? `<p class="incident-response"><strong>Response:</strong> ${escapeHtml(r.response)}</p>`
+          : "";
+
+        return `
+          <article class="incident-card sev-${r.severity.toLowerCase()}">
+            <div class="incident-main">
+              <div class="incident-top">
+                <h3 class="incident-title">${escapeHtml(r.title)}</h3>
+                <div class="incident-meta">
+                  <span class="badge ${r.severity.toLowerCase()}">${escapeHtml(r.severity)}</span>
+                  <span class="badge ${r.status}">${escapeHtml(r.status)}</span>
+                </div>
+              </div>
+              <p class="incident-time">${escapeHtml(r.service)} · Started ${escapeHtml(fmt(r.startedAt))}${timeLabel}</p>
+              ${impact}
+              ${response}
+              <div class="incident-actions">
+                ${stateButton}
+                <button class="edit-button" data-edit="${escapeHtml(r.id)}">Edit details</button>
+                <button class="delete-button" data-delete="${escapeHtml(r.id)}">Delete incident</button>
+              </div>
+            </div>
+          </article>
+        `.trim();
+      })
+      .join("");
   }
   function render() {
     renderMetrics();
