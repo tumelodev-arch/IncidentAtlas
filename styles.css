@@ -9,6 +9,7 @@
   --rule: #c9c4b9;
   --accent: #f75e3b;
   --accent-deep: #d84425;
+  --accent-text: #8a291a;
   --accent-soft: #ffe2d8;
   --accent-ink: #141822;
   --alert: #f75e3b;
@@ -44,7 +45,7 @@ p { max-width: 75ch; }
 }
 .brand { display: inline-flex; align-items: center; color: var(--ink); font-size: .78rem; font-weight: 800; letter-spacing: .02em; text-decoration: none; }
 .brand-name { color: var(--ink); }
-.brand-mark { color: var(--accent); }
+.brand-mark { color: var(--accent-text); }
 .topbar-label, .eyebrow, .metric-label, .status-chip, .count-chip, .panel-foot, .app-footer, .section-intro, .badge, .decision-meta, .incident-meta {
   font-family: var(--mono); font-size: .63rem; font-weight: 750; letter-spacing: .055em;
 }
@@ -58,7 +59,7 @@ p { max-width: 75ch; }
 }
 .eyebrow { margin-bottom: .6rem; color: var(--accent-deep); text-transform: uppercase; }
 .hero h1 { max-width: 13ch; margin-bottom: 1rem; color: var(--ink); }
-.hero h1 span { color: var(--accent); }
+.hero h1 span { color: var(--accent-text); }
 .lede { max-width: 62ch; margin-bottom: 0; color: var(--muted); font-size: clamp(1rem,1.3vw,1.12rem); }
 .privacy-note { display: flex; align-items: flex-start; gap: .75rem; padding: 1rem; border: 1px solid var(--ink); border-left: 4px solid var(--alert); background: var(--paper-deep); }
 .privacy-dot { flex: 0 0 auto; width: .65rem; height: .65rem; margin-top: .35rem; border-radius: 0; background: var(--accent); box-shadow: none; }
