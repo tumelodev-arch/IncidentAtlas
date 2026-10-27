@@ -163,13 +163,47 @@
   }
   function renderList() {
     const rows = filtered();
-    $("#visible-count").textContent = rows.length+" incident"+(rows.length === 1?"": "s");
-    $("#empty-state").hidden = rows.length>0;
-    $("#incident-list").innerHTML = rows.map(r => {
-      const stateButton = r.status === "open"?'<button class="resolve-button" data-resolve="'+escapeHtml(r.id)+'">Resolve incident</button>': '<button class="reopen-button" data-reopen="'+escapeHtml(r.id)+'">Reopen incident</button>';
-      return '<article class="incident-card sev-'+r.severity.toLowerCase()+'"><div class="incident-main"><div class="incident-top"><h3 class="incident-title">'+escapeHtml(r.title)+'</h3><div class="incident-meta"><span class="badge '+r.severity.toLowerCase()+'">'+escapeHtml(r.severity)+'</span><span class="badge '+r.status+'">'+escapeHtml(r.status)+'</span></div></div><p class="incident-time">'+escapeHtml(r.service)+' · Started '+escapeHtml(fmt(r.startedAt))+(r.status === "resolved"?' · Resolved '+escapeHtml(fmt(r.resolvedAt)): ' · Open for '+escapeHtml(duration(r.startedAt,
-      new Date().toISOString())))+'</p>'+(r.impact?'<p class="incident-impact">'+escapeHtml(r.impact)+'</p>': '')+(r.response?'<p class="incident-response"><strong>Response:</strong> '+escapeHtml(r.response)+'</p>': '')+'<div class="incident-actions">'+stateButton+'<button class="edit-button" data-edit="'+escapeHtml(r.id)+'">Edit details</button><button class="delete-button" data-delete="'+escapeHtml(r.id)+'">Delete incident</button></div></div></article>';
-    }).join("");
+    $("#visible-count").textContent = `${rows.length} incident${rows.length === 1 ? "" : "s"}`;
+    $("#empty-state").hidden = rows.length > 0;
+
+    $("#incident-list").innerHTML = rows
+      .map((r) => {
+        const stateButton = r.status === "open"
+          ? `<button class="resolve-button" data-resolve="${escapeHtml(r.id)}">Resolve incident</button>`
+          : `<button class="reopen-button" data-reopen="${escapeHtml(r.id)}">Reopen incident</button>`;
+        const timeLabel = r.status === "resolved"
+          ? ` · Resolved ${escapeHtml(fmt(r.resolvedAt))}`
+          : ` · Open for ${escapeHtml(duration(r.startedAt, new Date().toISOString()))}`;
+        const impact = r.impact
+          ? `<p class="incident-impact">${escapeHtml(r.impact)}</p>`
+          : "";
+        const response = r.response
+          ? `<p class="incident-response"><strong>Response:</strong> ${escapeHtml(r.response)}</p>`
+          : "";
+
+        return `
+          <article class="incident-card sev-${r.severity.toLowerCase()}">
+            <div class="incident-main">
+              <div class="incident-top">
+                <h3 class="incident-title">${escapeHtml(r.title)}</h3>
+                <div class="incident-meta">
+                  <span class="badge ${r.severity.toLowerCase()}">${escapeHtml(r.severity)}</span>
+                  <span class="badge ${r.status}">${escapeHtml(r.status)}</span>
+                </div>
+              </div>
+              <p class="incident-time">${escapeHtml(r.service)} · Started ${escapeHtml(fmt(r.startedAt))}${timeLabel}</p>
+              ${impact}
+              ${response}
+              <div class="incident-actions">
+                ${stateButton}
+                <button class="edit-button" data-edit="${escapeHtml(r.id)}">Edit details</button>
+                <button class="delete-button" data-delete="${escapeHtml(r.id)}">Delete incident</button>
+              </div>
+            </div>
+          </article>
+        `.trim();
+      })
+      .join("");
   }
   function render() {
     renderMetrics();
