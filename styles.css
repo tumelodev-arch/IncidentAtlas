@@ -201,3 +201,13 @@ input::placeholder, textarea::placeholder { color: #73798a; opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
+.button-danger {
+  border-color: #bd3c27;
+  background: #fffdf8;
+  color: #8a291a;
+}
+.button-danger:hover {
+  border-color: #bd3c27;
+  background: #ffe2d8;
+  color: #752718;
+}
