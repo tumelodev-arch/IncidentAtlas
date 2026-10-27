@@ -5,7 +5,7 @@
   --surface: #fffdf8;
   --ink: #141822;
   --muted: #596071;
-  --quiet: #626879;
+  --quiet: #555c6d;
   --rule: #c9c4b9;
   --accent: #f75e3b;
   --accent-deep: #d84425;
@@ -72,7 +72,7 @@ p { max-width: 75ch; }
   width: 100%; min-height: 42px; padding: .55rem .65rem; border: 1px solid #9297a3; border-radius: 0; background: #fff; color: var(--ink);
 }
 textarea { min-height: 100px; resize: vertical; }
-input::placeholder, textarea::placeholder { color: #73798a; opacity: 1; }
+input::placeholder, textarea::placeholder { color: #555c6d; opacity: 1; }
 .toolbar-actions, .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; }
 .button {
   display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: .4rem;
